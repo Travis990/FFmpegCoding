@@ -29,7 +29,18 @@ libavutil:            存放公共工具函数，包括CRC校验，整数�
 libavpostproc:   用于后期效果处理；  
 libswscale:    实现了色彩转换和缩放功能；  
 
+
+
 ![ffmpeg命令大全文档](asserts/ffmpeg命令大全文档.png)
 
+[linux-vim](http://www.runoob.com/linux/linux-vim.html)
+
+[史上最全Vim快捷键键位图 — 入门到进阶](http://www.runoob.com/w3cnote/all-vim-cheatsheat.html)  
 
 
+
+
+
+### C 语言基础
+clang -g -o testfunc testfunc.c
+./testfunc
