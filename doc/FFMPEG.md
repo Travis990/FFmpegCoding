@@ -132,4 +132,176 @@ clang -g -o mediainfo mediainfo.c -lavformat -lavutil
 ``` 
 
 实例见 extra_audio.c  
+运行：
+
+```
+clang -g -o extra_audio extra_audio.c -lavformat -lavutil  
+
+./extra_audio +文件名 +输出文件名
+
+```
+
+
+### [实战]抽取音频数据   
+```
+Start code  
+SPS/PPS  
+codec --> extradata 
+```
+
+实例见 extra_video.c  
+运行：
+
+```
+clang -g -o extra_video extra_video.c -lavformat -lavutil  
+
+./extra_video +文件名 +输出文件名
+
+```
+
+### [实战]将MP4转成FLV格式  
+```
+avformat_alloc_output_context2() /avformat_free_context()
+
+avformat_new_stream()  
+
+avcodec_parameters_copy()
+
+avformat_write_header()
+
+av_write_frame() / av_interleaved_write_frame()  
+```
+
+实例见 remuxing.c   
+
+ 运行：
+
+```
+clang -g -o remuxing remuxing.c -lavformat -lavutil  
+
+./remuxing  in.pm4  out.flv
+
+```
+
+
+### [实战]从MP4截取一段视频  
+```
+av_seek_frame()  
+
+```
+实例见 cutvideo.c   
+
+ 运行：
+
+```
+clang -g -o cutvideo cutvideo.c -lavformat -lavutil  
+
+./cutvideo  startime endtime srcfile outfile
+
+```
+
+### [实战]一个简单的小咖秀
+（将其他人的声音与视频相结合）
+
+* 将两个媒体文件中分别抽取音频和视频轨  
+* 将音频与视频轨合并成一个新文件  
+* 对音频与视频轨进行裁剪  
+
+
+### FFmpeg H264解码  
+#### 添加头文件  
+
+```
+libavcodec/avcodec.h  
+```
+#### 常用的数据结构  
+AVCodec 编解码结构体  
+AVCodecContext 编码器上下文  
+AVFrame 解码后的帧  
+
+
+#### 结构体内存的分配与释放  
+```
+av_frame_alloc/av_frame_free()  
+avcodec_alloc_context3()  
+avcodec_free_context()  
+```
+
+#### 解码步骤  
+查找解码器：  
+
+```
+avcodec_find_decoder
+```
+打卡解码器：
+
+```
+avcodec_open2
+```  
+
+解码：  
+
+```
+avcodec_decode_video2
+```
+
+
+### FFmpeg 编码流程  
+查找编码器：  
+
+```
+avcodec_find_encoder_by_name
+```
+
+设置编码参数，并打开编码器：  
+
+```
+avcodec_open2
+```
+
+编码：  
+
+```
+avcodec_encode_video2
+```
+
+示例见：encode_video.c
+
+
+ 运行：
+
+```
+clang -g -o encode_video encode_video.c -lavcodec -lavformat -lavutil  
+
+ ./encode_video <output file> <codec name>
+ 
+ eg.  ./encode_video 1.h264 libx264
+
+```
+
+
+### FFmpeg 视频转图片  
+
+示例见：decode_video.c
+
+
+### FFmpeg AAC 编码
+编码流程与视频相同  
+编码函数：  
+
+```
+avcodec_encodec_audio2
+```
+
+示例见：encode_audio.c
+
+运行：  
+
+```
+clang -g -o encode_audio encode_audio.c -lavcodec -lavformat -lavutil 
+
+./encode_audio <output file>   
+
+```
+
 
