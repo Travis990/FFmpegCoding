@@ -19,9 +19,7 @@ libswscale:    实现了色彩转换和缩放功能；
 
 
 
-### C 语言基础
-clang -g -o testfunc testfunc.c  
-./testfunc  
+
 
 ### FFmpeg打印日志  
 打印日志关键代码：  
@@ -51,9 +49,21 @@ clang -g -o ffmpeg_delfile ffmpeg_delfile.c -lavformat -lavutil
 failed to delete file mytestfile.txt
 ```  
 
+### 多媒体文件的基本概念  
+* 多媒体文件其实是个容器
+* 在容器里有很多流（Stream/Track）
+* 每种流是由不同的编码器编码的
+* 从流中读出的数据成为包
+* 在一个包中包含着一个或多个帧
+
+
 ### FFmpeg操作目录重要结构体
 * AVIOContext 操作目录的上下文  
 * AVIODirEntry 目录项。用于存放文件名、文件大小等信息。
+* AVStream
+* AVPacket
+
+实现 ls 功能：
 
 ```
 ➜  FFmpegCoding git:(master) ✗ clang -g -o list ffmpeg_list.c -lavformat -lavutil
@@ -91,4 +101,35 @@ failed to delete file mytestfile.txt
         5066 extra_audio_ffapi.c
          288 player
 ```
+
+### FFmpeg操作流数据的基本步骤  
+解复用--> 获取流 --> 读数据包 --> 释放资源  
+
+
+
+### [实战]打印音/视频信息  
+```
+ av_register_all()
+ avformat_open_input()/avformat_close_input
+ av_dump_format()
+```
+  
+实例见 mediainfo.c  
+运行：
+
+```
+clang -g -o mediainfo mediainfo.c -lavformat -lavutil  
+
+./mediainfo +文件名
+
+```
+
+### [实战]抽取音频数据  
+```
+ av_init_packet()
+ av_find_best_stream()
+ av_read_frame() / av_packet_unref()
+``` 
+
+实例见 extra_audio.c  
 
