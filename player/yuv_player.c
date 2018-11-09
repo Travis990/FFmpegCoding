@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
     SDL_Thread *timer_thread = NULL;
 
-    int w_width = 640; w_height = 480;
+    int w_width = 640, w_height = 480;
     const int video_width = 320, video_height = 180;
 
     Uint8 *video_pos = NULL;
@@ -60,10 +60,10 @@ int main(int argc, char* argv[])
 
     unsigned int remain_len = 0;
     unsigned int video_buff_len = 0;
-    unsigned int blank space_len = 0;
+    unsigned int blank_space_len = 0;
     Uint8 *video_buf[BLOCK_SIZE];
 
-    const char *path = "test_yuv420p_320x180.yuv";
+    const char *path = argv[1];//"test_yuv420p_320x180.yuv";
 
     const unsigned int yuv_frame_len = video_width * video_height * 12 / 8;
 
@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
 
                 //have remain data, but there isn't space
                 remain_len = video_end - video_pos;
-                if(remain_len && !black_space_len) {
+                if(remain_len && !blank_space_len) {
                     //copy data to header of buffer
                     memcpy(video_buf, video_pos, remain_len);
 

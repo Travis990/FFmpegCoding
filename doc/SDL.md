@@ -129,5 +129,24 @@ SDL_UpdateYUVTexture()
 示例见: yuv_player.c  
 
 ```
-
+clang -g -o yuv_player yuv_player.c `pkg-config --cflags --libs sdl2`
 ```
+TODO dubug yuv_player.c 
+
+### SDL播放音频 
+#### 播放音频基本流程  
+打开音频设备--> 设置音频参数 --> 向声卡喂数据 --> 播放音频 --> 关闭设备  
+
+#### 播放音频的基本原则  
+* 声卡向你要数据而不是你主动推给声卡  
+* 数据的多少由音频参数决定的  
+
+#### SDL 音频API  
+```
+SDL_OpenAudio/SDL_CloseAudio  
+SDL_PauseAudio  
+SDL_MixAudio  
+``` 
+
+### [实战]PCM音频播放器  
+
