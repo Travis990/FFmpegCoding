@@ -114,7 +114,7 @@ SDL_RenderPresent()
 ### [实战]YUV视频播放器  
 #### SDL创建线程  
 ```
-SDL_CreateTread
+SDL_CreateThread
     fn:线程执行函数  
     name:线程名  
     data:执行函数参数  
